@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 
+import sys
 import numpy as np
 import matplotlib as mpl
 mpl.use('pdf')
 import matplotlib.pyplot as plt
-import synth 
 
-from las import LASReader
+sys.path.append('./synth')
+import synth  
+from synth import generate_reflectivity 
+from synth import ricker
+from synth import plot_logs
 
 
 
@@ -29,9 +33,9 @@ end_t = 2.5
 #plot_logs('ai_time', t, Z_t_nn, Z_t_nn, start_t, end_t, title='impedence in time')
 
 
-r, RC_t = synth.generate_reflectivity()
+r, RC_t = generate_reflectivity()
 
-tw, w = synth.ricker (f=25, length = 0.512, dt = 0.004)
+tw, w = ricker (f=25, length = 0.512, dt = 0.004)
 synthetic = np.convolve(w, RC_t, mode='same')
 
 synthetic = np.resize(synthetic, t.size )

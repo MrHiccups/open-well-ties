@@ -79,7 +79,7 @@ def z2t(input, tdr, dt=0.004, maxt=3.0 ):
     return output
 
 
-def generate_reflectivity()
+def generate_reflectivity():
     L30 = LASReader('./synth/L-30.las', null_subs=np.nan)
 
     print L30.curves.names
