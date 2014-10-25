@@ -72,127 +72,94 @@ def ricker(f, length, dt):
     y = (1. - 2.*(np.pi**2)*(f**2)*(t**2))*np.exp(-(np.pi**2)*(f**2)*(t**2))
     return t, y
 
-L30 = LASReader('L-30.las', null_subs=np.nan)
+def z2t(input, tdr, dt=0.004, maxt=3.0 ):
+    # RESAMPLING FUNCTION
+    t = np.arange(0, maxt + dt, dt)
+    output = np.interp(x = t, xp = tdr, fp = input) 
+    return output
 
-print L30.curves.names
 
-print L30.curves.DEPTH.units
+def generate_reflectivity()
+    L30 = LASReader('./synth/L-30.las', null_subs=np.nan)
 
-# [7]
-z = f2m(L30.data['DEPTH'])      # convert feet to metres
-GR = L30.data['GRS']
-IL8 = L30.data['LL8']
-ILM = L30.data['ILM']
-ILD = L30.data['ILD']
-NPHISS = L30.data['NPHISS']
-NPHILS = L30.data['NPHILS']
-ILD = L30.data['ILD']
-DT = L30.data['DT']*3.28084     # convert usec/ft to usec/m
-RHOB = L30.data['RHOB']*1000    # convert to SI units
+    print L30.curves.names
 
-# Deal with absence of logs in the shallow section 
-#[8]
-print "KB elevation [m]: ", f2m(L30.well.KB.data) # Kelly Bushing (ft)
-print "Seafloor elevation [m]: ", f2m(L30.well.GL.data) # Depth to Sea Floor (ft)
-print "Top of sonic log [m]: ", f2m(L30.start)  # top of log (ft) (actually 1150 ft)
+    print L30.curves.DEPTH.units
 
-repl_int = f2m(L30.start) - f2m(L30.well.KB.data) + f2m(L30.well.GL.data)
-water_vel = 1480
-print "replacement interval [m]: ", repl_int
+    # [7]
+    z = f2m(L30.data['DEPTH'])      # convert feet to metres
+    GR = L30.data['GRS']
+    IL8 = L30.data['LL8']
+    ILM = L30.data['ILM']
+    ILD = L30.data['ILD']
+    NPHISS = L30.data['NPHISS']
+    NPHILS = L30.data['NPHILS']
+    ILD = L30.data['ILD']
+    DT = L30.data['DT']*3.28084     # convert usec/ft to usec/m
+    RHOB = L30.data['RHOB']*1000    # convert to SI units
 
-repl_vel = 1600 # m/s
-repl_time = 2 * repl_int / repl_vel
-print "two-way-replacement time: ", repl_time
+    # Deal with absence of logs in the shallow section 
+    #[8]
+    print "KB elevation [m]: ", f2m(L30.well.KB.data) # Kelly Bushing (ft)
+    print "Seafloor elevation [m]: ", f2m(L30.well.GL.data) # Depth to Sea Floor (ft)
+    print "Top of sonic log [m]: ", f2m(L30.start)  # top of log (ft) (actually 1150 ft)
 
-water_time = 2 * np.abs(f2m(L30.well.GL.data)) / water_vel
-print "seafloor bottom :", water_time
+    repl_int = f2m(L30.start) - f2m(L30.well.KB.data) + f2m(L30.well.GL.data)
+    water_vel = 1480
+    print "replacement interval [m]: ", repl_int
 
-log_start_time = water_time + repl_time
-print 'log_start_time:', log_start_time
+    repl_vel = 1600 # m/s
+    repl_time = 2 * repl_int / repl_vel
+    print "two-way-replacement time: ", repl_time
 
-top_log_TVDss = f2m(L30.well.KB.data) - f2m(L30.well.GL.data) 
+    water_time = 2 * np.abs(f2m(L30.well.GL.data)) / water_vel
+    print "seafloor bottom :", water_time
 
-# Fix and edit the logs
-# [11] (now in median_filter)
-rho_sm = median_filter(RHOB)
+    log_start_time = water_time + repl_time
+    print 'log_start_time:', log_start_time
 
-# In [14]:
-rho = despike(RHOB)
+    top_log_TVDss = f2m(L30.well.KB.data) - f2m(L30.well.GL.data) 
 
-#start_z = 13000
-#end_z = 14500
-start_z = 2300
-end_z = 2600
+    # Fix and edit the logs
+    # [11] (now in median_filter)
+    rho_sm = median_filter(RHOB)
 
-# In [15] (shoudl go into a function)
-plot_logs('density', z, RHOB, rho, start_z, end_z, title='de-spiked density')
+    # In [14]:
+    rho = despike(RHOB)
 
-# [16] filter sonic
-dt = despike(DT)
-
-# Plot sonic
-plot_logs('sonic', z, DT, dt, start_z, end_z, title='de-spiked sonic')
+    # [16] filter sonic
+    dt = despike(DT)
  
-# [18] Computing the time-to-depth relationship
-# The time-to-depth relationship is obtained by scaling the sonic log by the sample interval (6" or 0.1524 m) and by calling np.cumsum() on it.
-# two-way-time to depth relationship
-scaled_dt = 0.1524 * np.nan_to_num(dt) / 1e6
+    # [18] Computing the time-to-depth relationship
+    # The time-to-depth relationship is obtained by scaling the sonic log by the sample interval (6" or 0.1524 m) and by calling np.cumsum() on it.
+    # two-way-time to depth relationship
+    scaled_dt = 0.1524 * np.nan_to_num(dt) / 1e6
 
-tcum = 2 * np.cumsum(scaled_dt)
-tdr = tcum + log_start_time
+    tcum = 2 * np.cumsum(scaled_dt)
+    tdr = tcum + log_start_time
 
-# [19] Compute acoustic impedance
-Z = (1e6/dt) * rho
+    # [19] Compute acoustic impedance
+    Z = (1e6/dt) * rho
 
-plot_logs('ai_depth', z, Z, Z, start_z, end_z, title='Acoustic Impedance')
+    # [20] Compute reflection coefficient series
+    RC = (Z[1:] - Z[:-1]) / (Z[1:] + Z[:-1])
 
-# [20] Compute reflection coefficient series
-RC = (Z[1:] - Z[:-1]) / (Z[1:] + Z[:-1])
+    z_size = z.size
+    RC = np.resize(RC, z.size )
+    #plot_logs('well_reflectivity', z, RC, RC, start_z, end_z, title='well reflectivity')
 
-z_size = z.size
-rc_size = RC.size 
-print " RC.size = "+str(rc_size)
-print "z.size = "+str(z_size)
-RC = np.resize(RC, z.size )
-plot_logs('well_reflectivity', z, RC, RC, start_z, end_z, title='well reflectivity')
+    #### I'm ignoring the side by side QC plots for now as they are not necessary. #### 
 
-#### I'm ignoring the side by side QC plots for now as they are not necessary. #### 
+    # [26] Converting logs to two-way-travel time
 
-# [26] Converting logs to two-way-travel time
+    Z_t = z2t(Z,tdr) 
 
-# RESAMPLING FUNCTION
-dt = 0.004
-maxt = 3.0 + dt
-
-start_t = 1.4
-end_t = 2.5 
-
-print "min z = "+str(z.min()) +" max z = "+str(z.max() )
-
-
-t = np.arange(0, maxt, dt) 
-
-print "min t = "+str(t.min()) +" max t = "+str(t.max() )
-
-print "min tdr = "+str(tdr.min()) +" max tdr = "+str(tdr.max() )
-
-
-Z_t = np.interp(x = t, xp = tdr, fp = Z)
-
-Z_t_nn = np.nan_to_num(Z_t)
-print "min Z_t = "+str(Z_t_nn.min()) +" max Z_t = "+str(Z_t_nn.max() )
-
-plot_logs('ai_time', t, Z_t_nn, Z_t_nn, start_t, end_t, title='impedence in time')
-
-RC_t = (Z_t[1:] - Z_t[:-1]) / (Z_t[1:] + Z_t[:-1])
-
+    RC_t = (Z_t[1:] - Z_t[:-1]) / (Z_t[1:] + Z_t[:-1])
  
-RC_t = np.nan_to_num(RC_t)
-tw, w = ricker (f=25, length = 0.512, dt = 0.004)
-synth = np.convolve(w, RC_t, mode='same')
+    RC_t = np.nan_to_num(RC_t)
 
-synth = np.resize(synth, t.size )
-plot_logs('synthetic', t, synth, synth, start_t, end_t, title='synthetic')
+    return t, RC_t
+
 
 
 
