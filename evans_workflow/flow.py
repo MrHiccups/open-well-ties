@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
-### #!/opt/local/bin/python2.7
-## #!/usr/bin/env python
-
 import numpy as np
+import matplotlib as mpl
+mpl.use('pdf')
 import matplotlib.pyplot as plt
 from las import LASReader
 
@@ -48,6 +47,15 @@ def despike(curve, window=13, max_clip=100):
     out[spikes] = curve_sm[spikes] + max_clip  # Clip at the max allowed diff
     out[spukes] = curve_sm[spukes] - max_clip  # Clip at the min allowed diff
     return out
+
+def plot_logs(fig_name, depth, log1, log2, start, end, title=''):
+    plt.figure(figsize=(4,18))
+    plt.plot(log1[start:end], depth[start:end],'k')
+    plt.plot( log2[start:end], depth[start:end],'r')
+    plt.title(title)
+    plt.savefig(fig_name+'.pdf')
+
+
 
 L30 = LASReader('L-30.las', null_subs=np.nan)
 
@@ -101,11 +109,28 @@ end = 14500
 
 
 # In [15] (shoudl go into a function)
-plt.figure(figsize=(18,4))
-plt.plot(z[start:end], RHOB[start:end],'k')
-plt.plot(z[start:end], rho_sm[start:end],'b')
-plt.plot(z[start:end], rho[start:end],'r')
-plt.title('de-spiked density')
-plt.show()
+#plt.figure(figsize=(18,4))
+#plt.plot(z[start:end], RHOB[start:end],'k')
+#plt.plot(z[start:end], rho_sm[start:end],'b')
+#plt.plot(z[start:end], rho[start:end],'r')
+#plt.title('de-spiked density')
+#plt.show()
+
+
+plot_logs('density', z, RHOB, rho, start, end, title='')
+#plt.figure(figsize=(4,18))
+#plt.plot(RHOB[start:end], z[start:end],'k')
+#plt.plot( rho[start:end], z[start:end],'r')
+#plt.title('de-spiked density')
+#plt.show()
+
+
+
+# [16] filter sonic
+dt = despike(DT)
+
+# Plot sonic
+
+ 
 
  
