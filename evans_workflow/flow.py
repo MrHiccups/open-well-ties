@@ -32,7 +32,7 @@ def rolling_window(a, window):
 def median_filter(input_array, window=13):
   # the length of filter is 13 samples or ~ 2 metres
   out_array = np.median(rolling_window(input_array,window), -1)
-  out_array = np.pad(out_array, window/2, mode='edge')
+  #out_array = np.pad(out_array, window/2, mode='edge')
   return out_array 
 
 # [13]
@@ -90,4 +90,17 @@ top_log_TVDss = f2m(L30.well.KB.data) - f2m(L30.well.GL.data)
 # [11] (now in median_filter)
 rho_sm = median_filter(RHOB)
 
+# In [14]:
+rho = despike(RHOB)
+
+start = 13000
+end = 14500
+
+
+# In [15] (shoudl go into a function)
+plt.figure(figsize=(18,4))
+plt.plot(z[start:end], RHOB[start:end],'k')
+plt.plot(z[start:end], rho_sm[start:end],'b')
+plt.plot(z[start:end], rho[start:end],'r')
+plt.title('de-spiked density')
 
