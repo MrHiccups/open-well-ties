@@ -32,7 +32,7 @@ def rolling_window(a, window):
 def median_filter(input_array, window=13):
   # the length of filter is 13 samples or ~ 2 metres
   out_array = np.median(rolling_window(input_array,window), -1)
-  #out_array = np.pad(out_array, window/2, mode='edge')
+  out_array = np.pad(out_array, window/2, mode='edge')
   return out_array 
 
 # [13]
