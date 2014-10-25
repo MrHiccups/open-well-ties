@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
+### #!/opt/local/bin/python2.7
+## #!/usr/bin/env python
 
 import numpy as np
+import matplotlib.pyplot as plt
 from las import LASReader
 
 def f2m(thing):
@@ -103,4 +106,6 @@ plt.plot(z[start:end], RHOB[start:end],'k')
 plt.plot(z[start:end], rho_sm[start:end],'b')
 plt.plot(z[start:end], rho[start:end],'r')
 plt.title('de-spiked density')
+plt.show()
 
+ 
