@@ -1,1 +1,1 @@
-__all__ = ['flow']
+__all__ = ['synth']
