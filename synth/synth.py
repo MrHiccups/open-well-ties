@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import numpy as np
+import math
 import matplotlib as mpl
 mpl.use('pdf')
 import matplotlib.pyplot as plt
@@ -94,6 +95,11 @@ def get_data_trace(file, location):
     trace = traces[location:(location+1),0:751]
     return np.squeeze(trace) 
 
+def gabor_filt(f0=30, bandwidth=40, dt=0.004, nt=751):
+    #GaborFunction = exp(-([-N:N]*time_increment).^2*bandwidth^2*pi/(2*log(2))).*cos(2*pi*f0*([-N:N]*time_increment));
+    time_array = np.arange(-(nt-1)/2*dt, ((nt-1)/2+1)*dt, dt) 
+    gabor  = np.exp(-(time_array*time_array)*bandwidth**2 *math.pi /(2*math.log(2)))*np.cos(2*math.pi*f0*time_array) 
+    return gabor
 
 def generate_reflectivity():
     L30 = LASReader('./synth/L-30.las', null_subs=np.nan)
