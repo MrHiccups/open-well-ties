@@ -17,7 +17,7 @@
 	<div class="slider-group">
 		Y Position <div ui-slider min="-50" max="50" class="position-slider y-slider" ng-model="position.y"/>
 	</div>
-	<img class="graph" src="/plot"></img>
+	<img class="reflectivity-graph"></img>
 	</div>
 
     <script src="static/js/jquery-1.11.1.min.js"></script>
@@ -26,5 +26,26 @@
 	<script src="static/js/slider.js"></script>
 	<script src="static/js/bootstrap.min.js"></script>
 	<script src="static/js/welltieapp.js"></script>
+
+	<script>
+		$( document ).ready(function() {
+
+			var loadImage = function(class_name,url) {
+					var element_to_replace = $('.' + class_name);
+					element_to_replace.attr('src','/static/img/busy.gif');
+					var image = new Image();
+					image.onload = function() {
+					element_to_replace.replaceWith(image);
+					$(image).addClass(class_name);
+				};
+
+				image.src = url;
+			};
+
+		
+			loadImage('reflectivity-graph', '/plot?type=reflectivity');	
+
+		});
+	</script>
   </body>
 </html>
