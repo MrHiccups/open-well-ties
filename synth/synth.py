@@ -89,6 +89,11 @@ def z2t(input, tdr, dt=0.004, maxt=3.0 ):
     output = np.interp(x = t, xp = tdr, fp = input) 
     return t, output
 
+def get_data_trace(file, location):
+    traces = np.loadtxt('./data/PenobXL_1155.txt')
+    trace = traces[location:(location+1),0:751]
+    return np.squeeze(trace) 
+
 
 def generate_reflectivity():
     L30 = LASReader('./synth/L-30.las', null_subs=np.nan)

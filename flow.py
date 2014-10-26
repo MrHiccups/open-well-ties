@@ -8,11 +8,11 @@ import matplotlib.pyplot as plt
 
 sys.path.append('./synth')
 import synth  
-from synth.synth import generate_reflectivity 
-from synth.synth import ricker
-from synth.synth import plot_logs
-from synth.synth import plot_spectrum
-
+#from synth.synth import generate_reflectivity 
+#from synth.synth import ricker
+#from synth.synth import plot_logs
+#from synth.synth import plot_spectrum
+from synth.synth import *
 
 
 #QC plots 
@@ -39,11 +39,15 @@ tw, w = ricker (f=25, length = 0.512, dt = 0.004)
 synthetic = np.convolve(w, RC_t, mode='same')
 
 synthetic = np.resize(synthetic, t.size )
-plot_logs('./outputs/synthetic.pdf', 'pdf', t, synthetic, synthetic, start_t, end_t, title='synthetic')
+plot_logs('./outputs/synthetic.pdf', 'pdf', t, synthetic, synthetic, start_t, end_t, title='Synthetic')
 
 plot_spectrum('./outputs/spectrum.pdf', 'pdf', RC_t)
 
 np.savetxt("./outputs/reflectivity.txt", (RC_t))
 np.savetxt("./outputs/time.txt", (t))
 
+real_trace = get_data_trace( './data/PenobXL_1155.txt', 314)
+
+plot_logs('./outputs/real_trace.pdf', 'pdf', t, real_trace, real_trace, start_t, end_t, title='Real Trace')
+np.savetxt("./outputs/real_trace.txt", (real_trace))
 
