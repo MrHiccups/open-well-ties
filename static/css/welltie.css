@@ -1,5 +1,29 @@
 body {
 	margin: 10px;
+	background-color: Linen;
+}
+
+.title {
+	height: 50px;
+}
+
+.slider-group {
+	height: 50px;
+}
+
+.graph {
+	border: 1px;
+	display: inline-block;
+	position: absolute;
+	top: 180px;
+}
+
+.reflectivity-graph {
+}
+
+.spectrum-graph {
+	position: absolute;
+	left: 310px;
 }
 
 .content {

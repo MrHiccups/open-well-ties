@@ -16,7 +16,7 @@ def plot():
 
     preview_kind = request.args['type'] 
     if preview_kind == 'reflectivity':
-        plot_logs(buffer, 'png', t, RC_t, RC_t, start=1.4, end=2.5, title='reflectiviy') 
+        plot_logs(buffer, 'png', t, RC_t, RC_t, start=1.4, end=2.5, title='reflectivity') 
     elif preview_kind == 'spectrum':
         plot_spectrum( buffer, 'png', RC_t)
     else:

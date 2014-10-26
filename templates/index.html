@@ -12,14 +12,20 @@
 
     <h1 class="title">Well Tie</h1>
 	<div class="content">
-	<div class="slider-group">
-		X Position <div ui-slider min="-50" max="50" class="position-slider x-slider" ng-model="position.x"/>
-	</div>
-	<div class="slider-group">
-		Y Position <div ui-slider min="-50" max="50" class="position-slider y-slider" ng-model="position.y"/>
-	</div>
-	<img class="reflectivity-graph"></img>
-	<img class='spectrum-graph'></img>
+		<div class="slider-group">
+			<div>
+				X Position <div ui-slider min="-50" max="50" class="position-slider x-slider" ng-model="position.x"/>
+			</div>
+			<div class="slider-group">
+				Y Position <div ui-slider min="-50" max="50" class="position-slider y-slider" ng-model="position.y"/>
+			</div>
+			<div class="graph">
+				<img class="reflectivity-graph"></img>
+			</div>
+			<div class="graph">
+				<img class='spectrum-graph'></img>
+			</div>
+		</div>
 	</div>
 
     <script src="static/js/jquery-1.11.1.min.js"></script>
