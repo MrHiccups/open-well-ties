@@ -18,7 +18,29 @@ body {
 	border: 1px;
 	display: inline-block;
 	position: absolute;
-	top: 180px;
+	top: 130px;
+}
+
+.x-label {
+	position: relative;
+	top: -2px;
+}
+
+
+.x-slider {
+	position:relative;
+	top: -35px;
+	left: 75px;
+}
+
+.x-input {
+	position: relative;
+	width: 50px;
+	left: 165px;
+}
+
+.graph {
+	margin: 10px;
 }
 
 .reflectivity-graph {
@@ -26,7 +48,7 @@ body {
 
 .spectrum-graph {
 	position: absolute;
-	left: 310px;
+	left: 705px;
 }
 
 .content {
@@ -38,6 +60,3 @@ body {
 	margin: 5px;
 }
 
-.graph {
-	margin: 10px;
-}

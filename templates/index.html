@@ -6,17 +6,16 @@
 	 <link href="static/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	 <link href="static/css/welltie.css" rel="stylesheet">
 	 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-	 <link rel="prefetch" href="/images/big.jpeg">
+	 <link rel="prefetch" href="/static/img/busy.gif">
   </head>
   <body ng-controller='wellTieController'>
 
     <h1 class="title">Well Tie</h1>
 	<div class="content">
 		<div class="slider-group">
-				<span class="slider-label">X Position:</span><div ui-slider min="-50" max="50" class="position-slider x-slider" ng-model="position.x"></div>
-			</div>
-			<div class="slider-group">
-				<span class="slider-label">Y Position:</span><div ui-slider min="-50" max="50" class="position-slider y-slider" ng-model="position.y"></div>
+			<span class="slider-label x-label">X Position:</span>
+				<input type="number" ng-model="position.x" min="-50" max="50" class="x-input"></input>
+				<div ui-slider min="-50" max="50" class="position-slider x-slider" ng-model="position.x"></div>
 			</div>
 			<div class="graph">
 				<img class="reflectivity-graph"></img>
@@ -33,30 +32,5 @@
 	<script src="static/js/slider.js"></script>
 	<script src="static/js/bootstrap.min.js"></script>
 	<script src="static/js/welltieapp.js"></script>
-
-	<script>
-		'use strict';
-		
-		$( document ).ready(function() {
-
-			var loadImage = function(class_name,url) {
-					var element_to_replace = $('.' + class_name);
-					element_to_replace.attr('src','/static/img/busy.gif');
-
-					var image = new Image();
-					image.onload = function() {
-					element_to_replace.replaceWith(image);
-					$(image).addClass(class_name);
-				};
-
-				image.src = url;
-			};
-
-		
-			loadImage('reflectivity-graph', '/plot?type=reflectivity');	
-			loadImage('spectrum-graph', '/plot?type=spectrum');
-
-		});
-	</script>
   </body>
 </html>
