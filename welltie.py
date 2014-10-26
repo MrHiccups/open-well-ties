@@ -1,5 +1,5 @@
 from flask import Flask, render_template, make_response
-from synth.synth import generate_reflectivity, plot_logs
+from synth import generate_reflectivity, plot_logs
 from StringIO import StringIO 
 
 app = Flask(__name__)
