@@ -62,7 +62,8 @@ def plot_logs(output, format, depth, log1, log2, start, end, title=''):
     ax = fig.add_subplot(1,1,1)    
     ax.plot(log1, depth,'k')
     ax.plot( log2, depth ,'r')
-    ax.set_ylim([start,end])
+    #ax.set_ylim([start,end])
+    ax.set_ylim([end,start])
     ax.set_title(title) 
     fig.savefig(output, format=format) 
 
