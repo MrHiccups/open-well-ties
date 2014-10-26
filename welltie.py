@@ -1,5 +1,5 @@
-from flask import Flask, render_template, make_response
-from synth import generate_reflectivity, plot_logs
+from flask import *
+from synth import generate_reflectivity, plot_logs, plot_spectrum
 from StringIO import StringIO 
 
 app = Flask(__name__)
@@ -11,14 +11,17 @@ def index():
 @app.route('/plot')
 def plot():
     t, RC_t = generate_reflectivity()
-    start_z = 2300
-    end_z = 2600
-
-    start_t = 1.4
-    end_t = 2.5
 
     buffer = StringIO()
-    plot_logs(buffer, 'png', t, RC_t, RC_t, start_t, end_t, title='reflectiviy') 
+
+    preview_kind = request.args['type'] 
+    if preview_kind == 'reflectivity':
+        plot_logs(buffer, 'png', t, RC_t, RC_t, start=1.4, end=2.5, title='reflectivity') 
+    elif preview_kind == 'spectrum':
+        plot_spectrum( buffer, 'png', RC_t)
+    else:
+        raise Exception("Unknown preview type \"" + preview_kind + "\"") 
+
     response = make_response(buffer.getvalue())
     response.headers['Content-Type'] ='image/png'
     return response
