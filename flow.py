@@ -33,7 +33,7 @@ end_t = 2.5
 #plot_logs('ai_time', t, Z_t_nn, Z_t_nn, start_t, end_t, title='impedence in time')
 
 
-r, RC_t = generate_reflectivity()
+t, RC_t = generate_reflectivity()
 
 tw, w = ricker (f=25, length = 0.512, dt = 0.004)
 synthetic = np.convolve(w, RC_t, mode='same')

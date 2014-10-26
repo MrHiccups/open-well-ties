@@ -158,7 +158,7 @@ def generate_reflectivity():
  
     RC_t = np.nan_to_num(RC_t)
 
-    return t, RC_t
+    return Z_t, RC_t
 
 
 
