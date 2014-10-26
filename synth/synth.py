@@ -158,13 +158,8 @@ def generate_reflectivity():
  
     RC_t = np.nan_to_num(RC_t)
 
+
+    RC_t = np.resize(RC_t, t.size )
+
     return t, RC_t
 
-
-
-
-
-
-
-
- 
