@@ -11,7 +11,7 @@ import synth
 from synth.synth import generate_reflectivity 
 from synth.synth import ricker
 from synth.synth import plot_logs
-
+from synth.synth import plot_spectrum
 
 
 
@@ -40,6 +40,8 @@ synthetic = np.convolve(w, RC_t, mode='same')
 
 synthetic = np.resize(synthetic, t.size )
 plot_logs('./outputs/synthetic.pdf', 'pdf', t, synthetic, synthetic, start_t, end_t, title='synthetic')
+
+plot_spectrum('./outputs/spectrum.pdf', 'pdf', RC_t)
 
 np.savetxt("./outputs/reflectivity.txt", (RC_t))
 np.savetxt("./outputs/time.txt", (t))
