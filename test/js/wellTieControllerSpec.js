@@ -11,7 +11,7 @@ describe('wellTieController', function() {
 	}));
 
 	it('should initialise the x and y positions', function() {
-		expect(scope.x_position).toBe(0);
-		expect(scope.y_position).toBe(0);
+		expect(scope.position.x).toBe(0);
+		expect(scope.position.y).toBe(0);
 	});
 });
