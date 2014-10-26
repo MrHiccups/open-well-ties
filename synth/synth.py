@@ -104,8 +104,21 @@ def gabor_filt(f0=30, bandwidth=40, dt=0.004, nt=751):
     gabor  = np.exp(-(time_array*time_array)*bandwidth**2 *math.pi /(2*math.log(2)))*np.cos(2*math.pi*f0*time_array) 
     return gabor
 
-def wiener_filter(sig1, sig2, fs=0, ls=100): 
-    print "Hello world!"
+def wiener_filter(sig1, sig2, fs=0, ls=100, SNR=1000000): 
+    fourier_reflectivity = np.fft.rfft(sig1[fs:ls])
+    fourier_signal = np.fft.rfft(sig2[fs:ls])  
+
+    fourier_wavelet = fourier_signal * fourier_reflectivity.conj() / ( ( np.abs(fourier_reflectivity) ) ** 2 + 1./SNR)
+
+    wavelet= np.fft.irfft(fourier_wavelet)
+
+    return wavelet
+
+def mark_filter(sig1, sig2, fs=0, ls=100): 
+    fourier_reflectivity = np.fft.rfft(sig1[fs:ls])
+    fourier_signal = np.fft.rfft(sig2[fs:ls])
+
+    fourier_wavelet = fourier_signal / (fourier_reflectivity + 1.)
 
 
 def correlation(sig1, sig2, fs=0, ls=100):
