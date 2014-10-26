@@ -62,5 +62,9 @@ plot_spectrum('./outputs/well_synth2_spectrum.pdf', 'pdf', synth2)
 
 plot_logs('./outputs/real_trace2.pdf', 'pdf', t, real_trace, synth2, start_t, end_t, title='Real Trace')
 
+corr = correlation(real_trace, synth2, 251, 703)
+
+print corr
+
 
 

@@ -104,8 +104,16 @@ def gabor_filt(f0=30, bandwidth=40, dt=0.004, nt=751):
     gabor  = np.exp(-(time_array*time_array)*bandwidth**2 *math.pi /(2*math.log(2)))*np.cos(2*math.pi*f0*time_array) 
     return gabor
 
-def wiener_filter(): 
+def wiener_filter(sig1, sig2, fs=0, ls=100): 
     print "Hello world!"
+
+
+def correlation(sig1, sig2, fs=0, ls=100):
+    num = np.dot(sig1[fs:ls], sig2[fs:ls]) 
+    den = np.dot(sig1[fs:ls], sig1[fs:ls]) * np.dot(sig2[fs:ls], sig2[fs:ls])
+    den = math.sqrt(den)
+    corr = num / den
+    return corr 
 
 def generate_reflectivity():
     L30 = LASReader('./synth/L-30.las', null_subs=np.nan)
