@@ -13,7 +13,9 @@
     <h1 class="title">Well Tie</h1>
 	<div class="content">
 		<div class="slider-group">
-				<div class="slider-label x-label">X Position:</div><div ui-slider min="-50" max="50" class="position-slider x-slider" ng-model="position.x"></div>
+			<span class="slider-label x-label">X Position:</span>
+				<input type="number" ng-model="position.x" min="-50" max="50" class="x-input"></input>
+				<div ui-slider min="-50" max="50" class="position-slider x-slider" ng-model="position.x"></div>
 			</div>
 			<div class="graph">
 				<img class="reflectivity-graph"></img>
@@ -30,30 +32,5 @@
 	<script src="static/js/slider.js"></script>
 	<script src="static/js/bootstrap.min.js"></script>
 	<script src="static/js/welltieapp.js"></script>
-
-	<script>
-		'use strict';
-		
-		$( document ).ready(function() {
-
-			var loadImage = function(class_name,url) {
-					var element_to_replace = $('.' + class_name);
-					element_to_replace.attr('src','/static/img/busy.gif');
-
-					var image = new Image();
-					image.onload = function() {
-					element_to_replace.replaceWith(image);
-					$(image).addClass(class_name);
-				};
-
-				image.src = url;
-			};
-
-		
-			loadImage('reflectivity-graph', '/plot?type=reflectivity');	
-			loadImage('spectrum-graph', '/plot?type=spectrum');
-
-		});
-	</script>
   </body>
 </html>

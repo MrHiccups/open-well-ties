@@ -1,5 +1,5 @@
 from flask import *
-from synth import generate_reflectivity, plot_logs, plot_spectrum
+from synth import generate_reflectivity, plot_logs, plot_spectrum, get_data_trace
 from StringIO import StringIO 
 
 app = Flask(__name__)
@@ -11,7 +11,8 @@ def generate_image():
 
     preview_kind = request.args['type'] 
     if preview_kind == 'reflectivity':
-        plot_logs(buffer, 'png', t, RC_t, RC_t, start=1.4, end=2.5, title='Reflectivity') 
+        real_trace = get_data_trace( './data/PenobXL_1155.txt', 314,shift=int(request.args['shift']))
+        plot_logs(buffer, 'png', t, real_trace, RC_t, start=1.4, end=2.5, title='Reflectivity') 
     elif preview_kind == 'spectrum':
         plot_spectrum( buffer, 'png', RC_t, title='Spectrum')
     else:
