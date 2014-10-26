@@ -66,7 +66,7 @@ def plot_logs(output, format, depth, log1, log2, start, end, title=''):
     ax.set_ylim([end,start])
     ax.set_title(title) 
     ax.legend()
-    fig.savefig(output, format=format) 
+    fig.savefig(output, format=format, bbox_inches='tight') 
 
 def plot_spectrum(output, format, log, dt=0.004, title='spectrum'):
     ps = np.abs(np.fft.rfft(log))**2 
@@ -78,7 +78,7 @@ def plot_spectrum(output, format, log, dt=0.004, title='spectrum'):
     ax.plot(freqs, ps, 'k')
     ax.set_ylim()
     ax.set_title(title)
-    plt.savefig(output, format=format) 
+    plt.savefig(output, format=format, bbox_inches='tight') 
 
 # [27] output a ricker wavelet 
 def ricker(f, length, dt):
