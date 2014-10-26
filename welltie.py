@@ -4,12 +4,7 @@ from StringIO import StringIO
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/plot')
-def plot():
+def generate_image():
     t, RC_t = generate_reflectivity()
 
     buffer = StringIO()
@@ -22,7 +17,16 @@ def plot():
     else:
         raise Exception("Unknown preview type \"" + preview_kind + "\"") 
 
-    response = make_response(buffer.getvalue())
+    return buffer.getvalue()
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/plot')
+def plot():
+    png_data = generate_image()
+    response = make_response(png_data)
     response.headers['Content-Type'] ='image/png'
     return response
     
