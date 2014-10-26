@@ -1,11 +1,11 @@
 'use strict';
 
 describe('wellTieController', function() {
-	beforeEach(module('wellTieApp'));
+	beforeEach(angular.module('wellTieApp'));
 
 	var controller, scope;
 
-	beforeEach(inject(function($rootScope, $controller) {
+	beforeEach(angular.inject(function($rootScope, $controller) {
 		scope = $rootScope.$new();
 		controller = $controller('PhoneListCtrl', {$scope: scope});
 	}));

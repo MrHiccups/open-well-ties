@@ -56,14 +56,14 @@ def despike(curve, window=13, max_clip=100):
 #    plt.title(title)
 #    plt.savefig(fig_name+'.pdf')
 
-def plot_logs(fig_name, depth, log1, log2, start, end, title=''): 
+def plot_logs(output, format, depth, log1, log2, start, end, title=''): 
     fig = plt.figure(figsize=(4,18))
     ax = fig.add_subplot(1,1,1)    
     ax.plot(log1, depth,'k')
     ax.plot( log2, depth ,'r')
     ax.set_ylim([start,end])
     ax.set_title(title) 
-    fig.savefig(fig_name+'.pdf') 
+    fig.savefig(output, format=format) 
 
 
 # [27] output a ricker wavelet 

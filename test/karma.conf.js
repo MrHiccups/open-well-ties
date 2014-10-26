@@ -15,7 +15,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-	 'static/js/welltieapp.js', 
+	  'static/js/angular.min.js',
+	  'static/js/jquery-1.11.1.min.js',
+	 'static/js/*.js', 
 	 'test/js/**/*.js'
     ],
 
