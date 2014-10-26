@@ -41,8 +41,7 @@ synthetic = np.convolve(w, RC_t, mode='same')
 synthetic = np.resize(synthetic, t.size )
 plot_logs('synthetic.pdf', 'pdf', t, synthetic, synthetic, start_t, end_t, title='synthetic')
 
-
-#RC_t.savetxt("reflectivity.txt")
-
+np.savetxt("reflectivity.txt", (RC_t))
+np.savetxt("time.txt", (t))
 
 
