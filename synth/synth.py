@@ -76,7 +76,7 @@ def z2t(input, tdr, dt=0.004, maxt=3.0 ):
     # RESAMPLING FUNCTION
     t = np.arange(0, maxt + dt, dt)
     output = np.interp(x = t, xp = tdr, fp = input) 
-    return output
+    return t, output
 
 
 def generate_reflectivity():
@@ -152,13 +152,13 @@ def generate_reflectivity():
 
     # [26] Converting logs to two-way-travel time
 
-    Z_t = z2t(Z,tdr) 
+    t, Z_t = z2t(Z,tdr) 
 
     RC_t = (Z_t[1:] - Z_t[:-1]) / (Z_t[1:] + Z_t[:-1])
  
     RC_t = np.nan_to_num(RC_t)
 
-    return Z_t, RC_t
+    return t, RC_t
 
 
 

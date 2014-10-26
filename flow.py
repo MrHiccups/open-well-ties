@@ -39,10 +39,10 @@ tw, w = ricker (f=25, length = 0.512, dt = 0.004)
 synthetic = np.convolve(w, RC_t, mode='same')
 
 synthetic = np.resize(synthetic, t.size )
-plot_logs('synthetic', t, synthetic, synthetic, start_t, end_t, title='synthetic')
+plot_logs('synthetic.pdf', 'pdf', t, synthetic, synthetic, start_t, end_t, title='synthetic')
 
 
-RC_t.savetxt("reflectivity.txt")
+#RC_t.savetxt("reflectivity.txt")
 
 
 
