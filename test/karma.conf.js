@@ -15,10 +15,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-	  'static/js/angular.min.js',
 	  'static/js/jquery-1.11.1.min.js',
-	 'static/js/*.js', 
-	 'test/js/**/*.js'
+	  'static/js/angular-1.2.26/angular.js',
+	  'static/js/angular-1.2.26/angular-mocks.js',
+	  'static/js/*.js', 
+	  'test/js/**/*.js'
     ],
 
 

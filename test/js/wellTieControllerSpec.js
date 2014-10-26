@@ -1,17 +1,17 @@
 'use strict';
 
 describe('wellTieController', function() {
-	beforeEach(angular.module('wellTieApp'));
+	beforeEach(module('wellTieApp'));
 
 	var controller, scope;
 
-	beforeEach(angular.inject(function($rootScope, $controller) {
+	beforeEach(inject(function($rootScope, $controller) {
 		scope = $rootScope.$new();
-		controller = $controller('PhoneListCtrl', {$scope: scope});
+		controller = $controller('wellTieController', {$scope: scope});
 	}));
 
 	it('should initialise the x and y positions', function() {
-		expect(scope.x_position, toEqual(0));
-		expect(scope.y_position, toEqual(1));
+		expect(scope.x_position).toBe(0);
+		expect(scope.y_position).toBe(0);
 	});
 });
