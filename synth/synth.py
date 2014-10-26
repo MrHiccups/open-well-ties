@@ -60,11 +60,12 @@ def despike(curve, window=13, max_clip=100):
 def plot_logs(output, format, depth, log1, log2, start, end, title=''): 
     fig = plt.figure(figsize=(3,6), dpi=100)
     ax = fig.add_subplot(1,1,1)    
-    ax.plot(log1, depth,'k')
-    ax.plot( log2, depth ,'r')
+    ax.plot(log1, depth,'k', label="Seismic")
+    ax.plot( log2, depth ,'r', label="Well synthetic")
     #ax.set_ylim([start,end])
     ax.set_ylim([end,start])
     ax.set_title(title) 
+    ax.legend()
     fig.savefig(output, format=format) 
 
 def plot_spectrum(output, format, log, dt=0.004, title='spectrum'):
